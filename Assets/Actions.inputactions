@@ -51,18 +51,7 @@
                 {
                     "name": "up",
                     "id": "d8683c7e-c16d-44c1-bbe2-09ae92b9e3ac",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "22d9cfba-8630-4d7f-8206-87426314c9a4",
-                    "path": "<Keyboard>/s",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
