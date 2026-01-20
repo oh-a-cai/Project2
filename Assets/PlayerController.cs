@@ -8,6 +8,12 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     bool isGrounded;
     int score = 0;
+
+    bool isDashing;
+    float dashHorizontalDirection;
+    float dashVerticalDirection;
+    float dashSpeed = 15.0f;
+    float dashDuration = 0.2f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -27,6 +33,17 @@ public class PlayerController : MonoBehaviour
         float movementDistanceY = movementY * speed * Time.deltaTime;
         transform.position = new Vector2(transform.position.x + movementDistanceX, transform.position.y + movementDistanceY);
         */
+        if (isDashing && dashDuration > 0)
+        {
+            rb.linearVelocity = new Vector2(dashHorizontalDirection * dashSpeed, dashVerticalDirection * dashSpeed);
+            dashDuration -= Time.deltaTime;
+            return;
+        }
+        else
+        {
+            dashDuration = 0.3f;
+            isDashing = false;
+        }
         rb.linearVelocity = new Vector2(movementX * speed, rb.linearVelocity.y);
         if (movementY > 0 && isGrounded)
         {
@@ -41,6 +58,13 @@ public class PlayerController : MonoBehaviour
         movementY = v.y;
         Debug.Log("Movement X = " + movementX);
         Debug.Log("Movement Y = " + movementY);
+    }
+
+    void OnDash(InputValue value)
+    {
+        isDashing = true;
+        dashHorizontalDirection = movementX;
+        dashVerticalDirection = movementY;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
