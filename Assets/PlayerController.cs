@@ -14,10 +14,16 @@ public class PlayerController : MonoBehaviour
     float dashVerticalDirection;
     float dashSpeed = 15.0f;
     float dashDuration = 0.2f;
+
+    Animator animator;
+    SpriteRenderer spriteRenderer;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -45,9 +51,26 @@ public class PlayerController : MonoBehaviour
             isDashing = false;
         }
         rb.linearVelocity = new Vector2(movementX * speed, rb.linearVelocity.y);
-        if (movementY > 0 && isGrounded)
+        if (!Mathf.Approximately(movementX, 0f))
         {
-            rb.AddForce(new Vector2(0, 100));
+            animator.SetBool("isRunning", true);
+            spriteRenderer.flipX = movementX < 0;
+        }
+        else
+        {
+            animator.SetBool("isRunning", false);
+        }
+        if (movementY > 0)
+        {
+            if (isGrounded)
+            {
+                rb.AddForce(new Vector2(0, 200));
+                animator.SetBool("isJumping", true);
+            }
+        }
+        else
+        {
+            animator.SetBool("isJumping", false);
         }
     }
 
